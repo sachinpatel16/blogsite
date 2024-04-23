@@ -1,12 +1,15 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,BaseUserManager,AbstractBaseUser
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 
 # Create your models here.
-# class User_detail(AbstractUser):
-#     user_pic = models.FileField(upload_to='user_pic/',null=True,default=None)
+class Profile(models.Model):
+    name = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_pic = models.FileField(upload_to='user_pic/',null=True)
+    bio = models.TextField()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=250)

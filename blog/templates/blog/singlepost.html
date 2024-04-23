@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/static/css/post.css" />
   </head>
   <body>
+    <a href="{% url "index" %}"><button type="button"><</button></a>
+    
     <div class="container">
       <h2>Create Post</h2>
       <form action="{% url "post" %}" method="post" enctype="multipart/form-data">
@@ -20,7 +22,7 @@
           <textarea id="content" name="content" rows="6" required></textarea>
         </div>
         {% if user.is_authenticated %}
-        <div class="form-group">
+        <div class="form-group" style="visibility: hidden;">
           <label for="author">Author:</label>
           <input
             type="text"
@@ -33,7 +35,7 @@
         {% endif %}
         <div class="form-group">
           <label for="category">Category:</label>
-          <select id="category" name="category" >  
+          <select id="category" name="category" required >  
             <option  value="">Select Category</option>
             {% for cat in category %}
             <option value="{{cat.name}}">{{cat.name}}</option>
@@ -43,7 +45,7 @@
           </select>
           <div class="form-group">
             <label for="post_pic">Post Picture:</label>
-            <input type="file" id="post_pic" name="post_pic" accept="image/*" />
+            <input type="file" id="post_pic" name="post_pic" accept="image/*" required/>
           </div>
         </div>
         <button type="submit">Submit</button>

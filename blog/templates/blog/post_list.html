@@ -15,6 +15,13 @@ TemplateMo 553 Xtra Blog
 https://templatemo.com/tm-553-xtra-blog
 
 -->
+<style>
+    .custom-circle {
+        width: 70px; /* Adjust as needed */
+        height: 70px; /* Adjust as needed */
+        border-radius: 50%;
+    }
+</style>
 </head>
 <body>
 	<header class="tm-header" id="tm-header">
@@ -26,10 +33,38 @@ https://templatemo.com/tm-553-xtra-blog
                 <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i></div>            
                 <h1 class="text-center">Xtra Blog</h1>
             </div>
+            {% for d in user_data %}
+            {% if d.name_id == user.id %}
+            <div class='container'>
+                <div class="row my-4">
+                    <div class="col-md-5">
+                        <img src="/media/{{d.user_pic}}" alt="Image"  class="img-fluid rounded-circle custom-circle">
+                        {{d.name_id}}
+                        {{d.user.id}}
+                    </div>
+                    <div class="col-md-9">
+                        <h4>{{ user.username }}</h4>
+                        
+                    </div>
+                </div>
+            </div>
+                {% endif %}
+            {% endfor %}
+            
             <nav class="tm-nav" id="tm-nav">            
                 <ul>
                     {% if user.is_authenticated %}
-                    <h4>welcome | {{user.username}}</h4>
+                    <h3>welcome | {{user.username}}</h3>
+                    <li class="tm-nav-item "><a href="{% url 'admin:index' %}" class="tm-nav-link">
+                        <i class="fas fa-home"></i>
+                        Admin
+                    </a>
+                    </li>
+                    <li class="tm-nav-item "><a href="{% url 'profile' %}" class="tm-nav-link">
+                        <i class="fas fa-home"></i>
+                        Profile
+                    </a>
+                    </li>
                     <li class="tm-nav-item "><a href="{% url 'logout' %}" class="tm-nav-link">
                         <i class="fas fa-home"></i>
                         logout
@@ -46,11 +81,6 @@ https://templatemo.com/tm-553-xtra-blog
                     {% endif %}
                     
 
-
-                    <li class="tm-nav-item "><a href="{% url 'index' %}" class="tm-nav-link">
-                        <i class="fas fa-home"></i>
-                        Blog Home
-                    </a></li>
                     <li class="tm-nav-item"><a href="{% url "post" %}" class="tm-nav-link">
                         <i class="fas fa-pen"></i>
                         Single Post

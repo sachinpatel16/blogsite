@@ -100,11 +100,12 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
-
+# AUTH_USER_MODEL = 'blog.User'
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
+# LANGUAGE_CODE = "zh-hans"
 
 TIME_ZONE = "Asia/Kolkata"
 
@@ -112,6 +113,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+# AUTH_USER_MODEL = 'blog.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

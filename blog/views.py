@@ -2,7 +2,7 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
-from blog.models import Post,Coment,Category,Multimedia
+from blog.models import Post,Coment,Category,Multimedia,Profile
 from django.contrib.auth.models import User
 from blog.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
@@ -16,21 +16,70 @@ from django.views.generic import TemplateView,ListView,DetailView,CreateView,Upd
 # def index(request):
 #     return render(request,'blog/index.html')
 
+    # return HttpResponse("Page not found")
+
+
 class IndexListView(ListView):
     context_object_name = 'post_list'
     model = Post
     ordering = ['-id']
-
+    
+    def get_context_data(self, **kwargs):
+        contex =  super().get_context_data(**kwargs)
+        contex['user_data'] = Profile.objects.all()
+        return contex
 
 class PostDetailView(DetailView):
     context_object_name = 'post_detail'
     model = Post 
+    
+    def post(self,request, *args,**kwargs):
+        if request.method == 'POST':
+            post = self.get_object()
+            # name = request.POST.get('name')
+            text = request.POST.get('text')
+            
+            coment = Coment.objects.create(post=post,commenter=request.user,text=text)
+            return redirect('post_detail', pk=post.pk)
+    
+    def get_context_data(self, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        contex['user_prof'] = Profile.objects.all()
+        return contex
+
 
 
 def about(request):
     return render(request,'blog/about.html')
 # def post(request):
 #     return render(request,'blog/post.html')
+
+def profile(request):
+    user = request.user.id
+    print("user:",user)
+    if request.method == 'POST':
+        user_pic = request.FILES.get('post_pic')
+        name = request.POST.get('name')
+        bio = request.POST.get('bio')
+        
+        username = User.objects.get(username=name)
+        
+        try:
+            if Profile.objects.get(name_id = user):
+                u = Profile.objects.get(name_id = user)
+                u.name=username
+                u.user_pic=user_pic
+                u.bio=bio
+                u.save()
+            return redirect('/')
+        except:
+            prof = Profile.objects.create(name=username,user_pic=user_pic,bio=bio)
+            return redirect('/')
+    else:
+        pass
+    return render(request,'blog/profile.html')
+
+
 
 @login_required
 def post(request):
@@ -109,3 +158,6 @@ def user_registration(request):
 
 ############################################
 
+def custom_404(request, exception):
+    # return render(request, 'blog/404.html', status=404)
+    return HttpResponse("404 not found")

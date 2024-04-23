@@ -80,10 +80,10 @@ https://templatemo.com/tm-553-xtra-blog
             </div>            
             <div class="row tm-row">
                 {% for pic in post_detail.post_pic.all %}
-                <div class="col-12">
+
                     <!-- Video player 1422x800 -->
-                    <img width="700" height="300" controls class="tm-mb-40" src="/media/{{pic.file}}" alt="not found">
-                </div>
+                    <img width="300rm" height="200rm" controls class="tm-mb-40" src="/media/{{pic.file}}" alt="not found">
+
                 {% endfor %}
                 
             </div>
@@ -107,9 +107,9 @@ https://templatemo.com/tm-553-xtra-blog
                             {% for coment in post_detail.post_coment.all  %}
                             <div class="tm-comment tm-mb-45">
                                 <figure class="tm-comment-figure">
-                                    <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
-                                    <figcaption class="tm-color-primary text-center">{{coment.commenter}}</figcaption>
-                                </figure>
+                                        <img src="/media/{{c.user_pic}}" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                        <figcaption class="tm-color-primary text-center">{{coment.commenter}}</figcaption>
+                                    </figure>
                                 <div>
                                     <p>
                                         {{coment.text}}
@@ -120,7 +120,7 @@ https://templatemo.com/tm-553-xtra-blog
                                     </div>                                                 
                                 </div>                                
                             </div>
-                            <div class="tm-comment-reply tm-mb-45">
+                            {% comment %} <div class="tm-comment-reply tm-mb-45">
                                 <hr>
                                 <div class="tm-comment">
                                     <figure class="tm-comment-figure">
@@ -134,23 +134,24 @@ https://templatemo.com/tm-553-xtra-blog
                                     </p>
                                 </div>                                
                                 <span class="d-block text-right tm-color-primary">June 21, 2020</span>
-                            </div>
+                            </div> {% endcomment %}
                             {% endfor %}
-                            <form action="" class="mb-5 tm-comment-form">
+                            <form action="" class="mb-5 tm-comment-form" method='post'>
+                                {% csrf_token %}
                                 <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
-                                <div class="mb-4">
-                                    <input class="form-control" name="name" type="text">
+                                <div class="mb-4" style="visibility: hidden;">
+                                    <input class="form-control" name="post" type="text" value="{{post_detail.title}}">
+                                </div>
+                                <div class="mb-4" style="visibility: hidden;">
+                                    <input class="form-control" name="name" type="text" value="{{user.username}}">
                                 </div>
                                 <div class="mb-4">
-                                    <input class="form-control" name="email" type="text">
-                                </div>
-                                <div class="mb-4">
-                                    <textarea class="form-control" name="message" rows="6"></textarea>
+                                    <textarea class="form-control" name="text" rows="6"></textarea>
                                 </div>
                                 <div class="text-right">
                                     <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
                                 </div>                                
-                            </form>                          
+                            </form>                     
                         </div>
                     </div>
                 </div>
