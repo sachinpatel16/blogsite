@@ -5,8 +5,8 @@ from django.conf.urls.static import static
 from mysite import settings
 
 
-from django.conf.urls import handler404
-handler404 = 'blog.views.custom_404'
+# from django.conf.urls import handler404
+# handler404 = 'blog.views.custom_404'
 
 urlpatterns = [
     path("",include('blog.urls')),

@@ -198,6 +198,7 @@ ul {
 .tm-post-link-inner {
     overflow: hidden;
     background: #3085a3;
+    height: 244px;
 }
 
 .tm-post-link img {
